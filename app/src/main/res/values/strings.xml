@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Sandcrab Dictionary</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_demo_word">Sandcrab</string>
+    <string name="text_demo_meaning">the occurrence of a sudden discharge (as of liquid) someone who is small and insignificant</string>
+    <string name="text_recent_words">Recent Words</string>
+    <string name="text_random_words">Random Words</string>
+    <string name="text_demo_ipa">/wɜːk/</string>
+    <string name="text_app_version">Version 1.0.0</string>
 </resources>

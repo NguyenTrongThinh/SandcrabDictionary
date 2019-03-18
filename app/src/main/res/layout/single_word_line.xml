@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:id="@+id/singleWordLineWord"
+            android:text="@string/text_demo_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toLeftOf="@id/singleWordLineSound"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="19sp"
+            android:textStyle="normal"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:id="@+id/singleWordLineIPA"
+            android:text="@string/text_demo_ipa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/LightGray"
+            android:ellipsize="end"
+            android:maxWidth="350dp"
+            android:singleLine="true"
+            android:textSize="13sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/singleWordLineMeaning"
+            android:layout_below="@id/singleWordLineWord"
+            android:text="@string/text_demo_meaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:layout_centerVertical="true"
+            android:id="@+id/singleWordLineSound"
+            android:background="@null"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+
+            android:scaleType="fitXY"
+            android:src="@drawable/speaker_background" />
+    </RelativeLayout>
+</layout>

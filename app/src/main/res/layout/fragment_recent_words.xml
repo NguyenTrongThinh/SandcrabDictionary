@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.RecentWordsFragment">
+        <TextView
+            android:textColor="@color/LightGray"
+            android:paddingEnd="10dp"
+            android:gravity="right"
+            android:textSize="13sp"
+            android:text="@string/text_recent_words"
+            android:id="@+id/fragmentRecentWordsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="3dp"
+            android:id="@+id/fragmentRecentWordsRecyclerViewList"
+            android:layout_below="@id/fragmentRecentWordsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+</layout>

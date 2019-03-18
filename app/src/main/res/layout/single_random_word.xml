@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.CardView
+        android:foregroundGravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_width="270dp"
+        android:layout_height="270dp">
+        <RelativeLayout
+            android:background="@drawable/random_words_shape"
+            android:layout_width="match_parent"
+            android:layout_height="270dp">
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/singleRandomWordImage"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/sandcrab_dictionary"
+                android:layout_width="150dp"
+                android:layout_height="150dp" />
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/singleRandomWordTitle"
+                android:scaleType="fitXY"
+                android:id="@+id/singleRandomWordBullet"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/circle"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_below="@id/singleRandomWordImage"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:id="@+id/singleRandomWordTitle"
+                android:text="@string/text_demo_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:layout_toRightOf="@id/singleRandomWordTitle"
+                android:layout_below="@id/singleRandomWordImage"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="19sp"
+                android:textStyle="normal"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:id="@+id/singleRandomWordIPA"
+                android:text="@string/text_demo_ipa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_toRightOf="@id/singleRandomWordBullet"
+                android:textColor="@android:color/black"
+                android:ellipsize="end"
+                android:maxWidth="350dp"
+                android:maxLines="2"
+                android:textSize="16sp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/singleRandomWordMeaning"
+                android:layout_below="@id/singleRandomWordTitle"
+                android:text="@string/text_demo_meaning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</layout>
