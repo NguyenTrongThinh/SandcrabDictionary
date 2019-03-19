@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/mnuFavourite"
-        android:title="Favourite"
+        android:title="@string/text_favourite"
         android:icon="@drawable/ic_favorite_black_24dp"/>
-    <item android:id="@+id/mnuWatchAds"
-        android:icon="@drawable/ic_ondemand_video_black_24dp"
-        android:title="Watch Ads"/>
     <item android:id="@+id/mnuSetting"
         android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Setting"/>
+        android:title="@string/text_setting"/>
+
     <item android:id="@+id/mnuAbout"
         android:icon="@drawable/ic_live_help_black_24dp"
-        android:title="About"/>
-
+        android:title="@string/text_about"/>
+    <item
+        android:title="@string/text_contribution"
+        android:id="@+id/mnuContribution">
+        <menu>
+            <group>
+                <item android:id="@+id/mnuWatchAds"
+                    android:icon="@drawable/ic_ondemand_video_black_24dp"
+                    android:title="@string/text_watch_ads"/>
+            </group>
+        </menu>
+    </item>
 
 </menu>

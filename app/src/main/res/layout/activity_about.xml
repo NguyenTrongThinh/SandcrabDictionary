@@ -28,7 +28,8 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/sandcrab_dictionary"
                 android:layout_width="200dp"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"
+                android:contentDescription="TODO" />
             <TextView
                 android:layout_below="@id/activityAboutAppIcon"
                 android:layout_centerHorizontal="true"
