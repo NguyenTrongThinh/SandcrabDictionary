@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
         if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.activityMainDrawerLayout.closeDrawers();
         } else if (wordDetailsFragment.getVisibility() == View.VISIBLE) {
+            searchViewEditText.setText("");
             wordDetailsFragment.setVisibility(View.GONE);
             recentWordsFragment.setVisibility(View.VISIBLE);
             randomWordsFragment.setVisibility(View.VISIBLE);
