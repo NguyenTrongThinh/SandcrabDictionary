@@ -45,6 +45,13 @@
                         android:layout_below="@id/activityMainRandomWords"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+                    <fragment
+                        android:id="@+id/activityMainWordDetails"
+                        android:name="com.solo.sandcrabdictionary.fragments.WordDetailsFragment"
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@id/activityMainRecentWords"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 </RelativeLayout>
 
             </FrameLayout>

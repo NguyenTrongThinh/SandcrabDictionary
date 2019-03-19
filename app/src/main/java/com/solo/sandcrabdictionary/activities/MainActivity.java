@@ -25,6 +25,7 @@ import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.ActivityMainBinding;
 import com.solo.sandcrabdictionary.fragments.RandomWordsFragment;
 import com.solo.sandcrabdictionary.fragments.RecentWordsFragment;
+import com.solo.sandcrabdictionary.fragments.WordDetailsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private RecentWordsFragment recentWordsFragment;
     private RandomWordsFragment randomWordsFragment;
+    private WordDetailsFragment wordDetailsFragment;
     private FragmentManager fragmentManager;
     private SearchView searchView;
     @Override
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         recentWordsFragment = (RecentWordsFragment) fragmentManager.findFragmentById(R.id.activityMainRecentWords);
         randomWordsFragment = (RandomWordsFragment) fragmentManager.findFragmentById(R.id.activityMainRandomWords);
+        wordDetailsFragment = (WordDetailsFragment) fragmentManager.findFragmentById(R.id.activityMainWordDetails);
+        wordDetailsFragment.setVisibility(View.GONE);
     }
 
     private void initNavigationDrawer() {
@@ -112,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
 
-
-
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d(TAG, "onQueryTextSubmit: " + query);
+                
                 return true;
             }
 
