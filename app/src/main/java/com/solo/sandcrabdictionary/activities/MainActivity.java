@@ -12,12 +12,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -26,6 +26,13 @@ import com.solo.sandcrabdictionary.databinding.ActivityMainBinding;
 import com.solo.sandcrabdictionary.fragments.RandomWordsFragment;
 import com.solo.sandcrabdictionary.fragments.RecentWordsFragment;
 import com.solo.sandcrabdictionary.fragments.WordDetailsFragment;
+import com.solo.sandcrabdictionary.models.OxfordWord;
+import com.solo.sandcrabdictionary.servers.OxfordDictionaryClient;
+import com.solo.sandcrabdictionary.servers.OxfordDictionaryInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,17 +43,22 @@ public class MainActivity extends AppCompatActivity {
     private WordDetailsFragment wordDetailsFragment;
     private FragmentManager fragmentManager;
     private SearchView searchView;
+    private EditText searchViewEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        setSupportActionBar(binding.fragmentSearchToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_blue_light_24dp);
-        binding.fragmentSearchToolbar.setTitle(getResources().getString(R.string.app_name));
 
+        initActionBar();
         initFragments();
         initNavigationDrawer();
+    }
+
+    private void initActionBar() {
+        setSupportActionBar(binding.activityMainToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_blue_light_24dp);
+        binding.activityMainToolbar.setTitle(getResources().getString(R.string.app_name));
     }
 
     private void initFragments() {
@@ -109,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menuItem.getActionView();
         ImageView searchViewIcon = searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-        EditText searchViewEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchViewEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchViewEditText.setSelectAllOnFocus(true);
         ViewGroup linearLayoutSearchView =(ViewGroup) searchViewIcon.getParent();
         linearLayoutSearchView.removeView(searchViewIcon);
-        searchViewEditText.setSelectAllOnFocus(true);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
 
@@ -121,18 +133,49 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    randomWordsFragment.setVisibility(View.GONE);
+                    if (wordDetailsFragment.getVisibility() == View.GONE) {
+                        recentWordsFragment.setVisibility(View.VISIBLE);
+                        randomWordsFragment.setVisibility(View.GONE);
+                    }
                 }
-                else
-                    randomWordsFragment.setVisibility(View.VISIBLE);
+                else {
+                    if (wordDetailsFragment.getVisibility() == View.GONE) {
+                        recentWordsFragment.setVisibility(View.VISIBLE);
+                        randomWordsFragment.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d(TAG, "onQueryTextSubmit: " + query);
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                binding.activityMainLoading.show();
+                final OxfordDictionaryInterface oxfordDictionaryInterface = OxfordDictionaryClient.getService();
+                final Call<OxfordWord> callback = oxfordDictionaryInterface.lookUpWord(searchViewEditText.getText().toString());
+                callback.enqueue(new Callback<OxfordWord>() {
+                    @Override
+                    public void onResponse(Call<OxfordWord> call, Response<OxfordWord> response) {
+                        OxfordWord oxfordWord = response.body();
+                        binding.activityMainLoading.hide();
+                        recentWordsFragment.setVisibility(View.GONE);
+                        randomWordsFragment.setVisibility(View.GONE);
+                        wordDetailsFragment.setPageContent(oxfordWord);
+                        wordDetailsFragment.setVisibility(View.VISIBLE);
+                        searchViewEditText.setText("");
+                        searchView.clearFocus();
 
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<OxfordWord> call, Throwable t) {
+                        binding.activityMainLoading.hide();
+                        callback.cancel();
+                    }
+                });
                 return true;
             }
 
@@ -150,6 +193,10 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.activityMainDrawerLayout.closeDrawers();
+        } else if (wordDetailsFragment.getVisibility() == View.VISIBLE) {
+            wordDetailsFragment.setVisibility(View.GONE);
+            recentWordsFragment.setVisibility(View.VISIBLE);
+            randomWordsFragment.setVisibility(View.VISIBLE);
         } else {
             super.onBackPressed();
         }
