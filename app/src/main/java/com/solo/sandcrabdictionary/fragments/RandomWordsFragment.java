@@ -24,7 +24,7 @@ public class RandomWordsFragment extends Fragment {
 
 
     private FragmentRandomWordsBinding binding;
-    private View view;
+    private View view = null;
     private RandomWordsAdapter randomWordsAdapter;
     public RandomWordsFragment() {
         // Required empty public constructor
@@ -54,6 +54,11 @@ public class RandomWordsFragment extends Fragment {
         binding.fragmentRandomWordsRecyclerViewList.setAdapter(randomWordsAdapter);
         view = binding.getRoot();
         return view;
+    }
+
+    public void setVisibility(int visibility) {
+        if (view != null)
+            view.setVisibility(visibility);
     }
 
 }

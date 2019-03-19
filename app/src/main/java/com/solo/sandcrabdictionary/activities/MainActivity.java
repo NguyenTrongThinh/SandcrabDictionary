@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +22,7 @@ import android.widget.ImageView;
 
 import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.ActivityMainBinding;
+import com.solo.sandcrabdictionary.fragments.RandomWordsFragment;
 import com.solo.sandcrabdictionary.fragments.RecentWordsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static final String TAG = "MainActivity";
     private RecentWordsFragment recentWordsFragment;
+    private RandomWordsFragment randomWordsFragment;
     private FragmentManager fragmentManager;
     private SearchView searchView;
-    private BottomSheetBehavior bottomSheetBehavior;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,23 +42,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_blue_light_24dp);
         binding.fragmentSearchToolbar.setTitle(getResources().getString(R.string.app_name));
 
-        initBottomSheet();
+        initFragments();
+        initNavigationDrawer();
+    }
 
-
+    private void initFragments() {
         fragmentManager = getSupportFragmentManager();
         recentWordsFragment = (RecentWordsFragment) fragmentManager.findFragmentById(R.id.activityMainRecentWords);
+        randomWordsFragment = (RandomWordsFragment) fragmentManager.findFragmentById(R.id.activityMainRandomWords);
+    }
 
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View view, int i) {
-                binding.bottomSheet.bottomSheetWord.setText("State Changed");
-            }
-
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-                binding.bottomSheet.bottomSheetWord.setText("State Slide");
-            }
-        });
+    private void initNavigationDrawer() {
         binding.activityMainNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -86,20 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
-    private void initBottomSheet() {
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheetRelativeLayout);
-//        Display display = getWindowManager().getDefaultDisplay();
-//        DisplayMetrics outMetrics = new DisplayMetrics ();
-//        display.getMetrics(outMetrics);
-//
-//        ViewGroup.LayoutParams layoutParams = binding.bottomSheet.bottomSheetRelativeLayout.getLayoutParams();
-//        layoutParams.height = outMetrics.heightPixels - android.R.attr.actionBarSize;
-//        binding.bottomSheet.bottomSheetRelativeLayout.setLayoutParams(layoutParams);
-//        binding.bottomSheet.bottomSheetRelativeLayout.requestLayout();
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -127,7 +109,18 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutSearchView.removeView(searchViewIcon);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
-//        searchView.setBackground(getDrawable(R.drawable.random_words_shape));
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    randomWordsFragment.setVisibility(View.GONE);
+                else
+                    randomWordsFragment.setVisibility(View.VISIBLE);
+            }
+        });
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

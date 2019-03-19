@@ -24,7 +24,7 @@ public class RecentWordsFragment extends Fragment {
 
 
     private FragmentRecentWordsBinding binding;
-    private View view;
+    private View view = null;
     private RecentWordsAdapter recentWordsAdapter;
     private static final String TAG = "RecentWordsFragment";
     public RecentWordsFragment() {
@@ -55,6 +55,12 @@ public class RecentWordsFragment extends Fragment {
         view = binding.getRoot();
         return view;
     }
+
+    public void setVisibility(int visibility) {
+        if (view != null)
+            view.setVisibility(visibility);
+    }
+
     public void filter(CharSequence newText) {
         recentWordsAdapter.getFilter().filter(newText);
     }
