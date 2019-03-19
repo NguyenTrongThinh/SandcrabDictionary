@@ -1,5 +1,6 @@
 package com.solo.sandcrabdictionary.activities;
 
+import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -63,16 +64,23 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 binding.activityMainDrawerLayout.closeDrawers();
+
                 switch (menuItem.getItemId()) {
                     case R.id.mnuFavourite:
                         break;
                     case R.id.mnuWatchAds:
+                        Intent intentwatchAds = new Intent(MainActivity.this, AdsActivity.class);
+                        ActivityOptions optionsWatchAds =
+                                ActivityOptions.makeCustomAnimation(getApplication(), R.anim.fade_in, R.anim.fade_out);
+                        startActivity(intentwatchAds, optionsWatchAds.toBundle());
                         break;
                     case R.id.mnuSetting:
                         break;
                     case R.id.mnuAbout:
-                        Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-                        startActivity(intent);
+                        Intent intentAbout = new Intent(MainActivity.this, AboutActivity.class);
+                        ActivityOptions optionsAbout =
+                                ActivityOptions.makeCustomAnimation(getApplication(), R.anim.fade_in, R.anim.fade_out);
+                        startActivity(intentAbout, optionsAbout.toBundle());
                         break;
                 }
                 return true;

@@ -9,4 +9,7 @@
     <string name="text_random_words">Random Words</string>
     <string name="text_demo_ipa">/wɜːk/</string>
     <string name="text_app_version">Version 1.0.0</string>
+    <string name="admod_banner_top">ca-app-pub-2499028768274374/7188924146</string>
+    <string name="admod_banner_bottom">ca-app-pub-2499028768274374/9245253608</string>
+    <string name="admod_app_id">ca-app-pub-2499028768274374~7385377028</string>
 </resources>
