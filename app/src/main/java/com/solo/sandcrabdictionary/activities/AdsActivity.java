@@ -21,7 +21,6 @@ public class AdsActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ads);
 
         MobileAds.initialize(this, getResources().getString(R.string.admod_app_id));
-
         initTopAds();
 
         initBottomAds();
@@ -30,6 +29,7 @@ public class AdsActivity extends AppCompatActivity {
     private void initBottomAds() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("B6E832929390E817BFEC1D0D23316E21")
                 .build();
         binding.adViewBottom.loadAd(adRequest);
         binding.adViewBottom.setAdListener(new AdListener() {
@@ -68,6 +68,7 @@ public class AdsActivity extends AppCompatActivity {
     private void initTopAds() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("B6E832929390E817BFEC1D0D23316E21")
                 .build();
         binding.adViewTop.loadAd(adRequest);
         binding.adViewTop.setAdListener(new AdListener() {

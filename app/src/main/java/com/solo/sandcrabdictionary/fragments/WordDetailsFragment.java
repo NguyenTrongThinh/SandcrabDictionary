@@ -19,7 +19,7 @@ public class WordDetailsFragment extends Fragment {
 
     private FragmentWordDetailsBinding binding;
     private View view;
-    private int visibilityStatus = View.GONE;
+    private static int visibilityStatus = View.GONE;
     public WordDetailsFragment() {
         // Required empty public constructor
     }

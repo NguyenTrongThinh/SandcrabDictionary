@@ -109,10 +109,34 @@ public class MainActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (intent != null && Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+
             searchView.setQuery(query, true);
         }
     }
 
+    private void lookUpWord(String word) {
+        final OxfordDictionaryInterface oxfordDictionaryInterface = OxfordDictionaryClient.getService();
+        final Call<OxfordWord> callback = oxfordDictionaryInterface.lookUpWord(word);
+        callback.enqueue(new Callback<OxfordWord>() {
+            @Override
+            public void onResponse(Call<OxfordWord> call, Response<OxfordWord> response) {
+                OxfordWord oxfordWord = response.body();
+                binding.activityMainLoading.hide();
+                recentWordsFragment.setVisibility(View.GONE);
+                randomWordsFragment.setVisibility(View.GONE);
+                wordDetailsFragment.setPageContent(oxfordWord);
+                wordDetailsFragment.setVisibility(View.VISIBLE);
+                searchViewEditText.setText("");
+                searchView.clearFocus();
+            }
+
+            @Override
+            public void onFailure(Call<OxfordWord> call, Throwable t) {
+                binding.activityMainLoading.hide();
+                callback.cancel();
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -153,29 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 binding.activityMainLoading.show();
-                final OxfordDictionaryInterface oxfordDictionaryInterface = OxfordDictionaryClient.getService();
-                final Call<OxfordWord> callback = oxfordDictionaryInterface.lookUpWord(searchViewEditText.getText().toString());
-                callback.enqueue(new Callback<OxfordWord>() {
-                    @Override
-                    public void onResponse(Call<OxfordWord> call, Response<OxfordWord> response) {
-                        OxfordWord oxfordWord = response.body();
-                        binding.activityMainLoading.hide();
-                        recentWordsFragment.setVisibility(View.GONE);
-                        randomWordsFragment.setVisibility(View.GONE);
-                        wordDetailsFragment.setPageContent(oxfordWord);
-                        wordDetailsFragment.setVisibility(View.VISIBLE);
-                        searchViewEditText.setText("");
-                        searchView.clearFocus();
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<OxfordWord> call, Throwable t) {
-                        binding.activityMainLoading.hide();
-                        callback.cancel();
-                    }
-                });
+                lookUpWord(searchViewEditText.getText().toString());
                 return true;
             }
 
