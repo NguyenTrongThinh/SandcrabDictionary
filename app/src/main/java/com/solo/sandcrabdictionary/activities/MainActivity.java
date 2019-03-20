@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,8 @@ import com.solo.sandcrabdictionary.models.OxfordWord;
 import com.solo.sandcrabdictionary.servers.OxfordDictionaryClient;
 import com.solo.sandcrabdictionary.servers.OxfordDictionaryInterface;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private RandomWordsFragment randomWordsFragment;
     private WordDetailsFragment wordDetailsFragment;
     private FragmentManager fragmentManager;
+    private static final int RECOGNIZER_REQ_CODE = 1234;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initActionBar() {
-        binding.activityMainsearchBar.setHint(getResources().getString(R.string.text_demo_word));
-        binding.activityMainsearchBar.setSpeechMode(true);
         binding.activityMainsearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
                         binding.activityMainDrawerLayout.openDrawer(GravityCompat.START);
                         break;
                     case MaterialSearchBar.BUTTON_SPEECH:
+                        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                        startActivityForResult(intent, RECOGNIZER_REQ_CODE);
                         break;
                     case MaterialSearchBar.BUTTON_BACK:
                         binding.activityMainsearchBar.disableSearch();
@@ -150,6 +154,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RECOGNIZER_REQ_CODE && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                if (matches != null && matches.size() > 0) {
+                    String searchWrd = matches.get(0);
+                    binding.activityMainLoading.show();
+                    lookUpWord(searchWrd);
+                }
+
+                return;
+            }
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
     private void lookUpWord(String word) {
         final OxfordDictionaryInterface oxfordDictionaryInterface = OxfordDictionaryClient.getService();
         final Call<OxfordWord> callback = oxfordDictionaryInterface.lookUpWord(word);
@@ -162,7 +182,8 @@ public class MainActivity extends AppCompatActivity {
                 randomWordsFragment.setVisibility(View.GONE);
                 wordDetailsFragment.setPageContent(oxfordWord);
                 wordDetailsFragment.setVisibility(View.VISIBLE);
-                binding.activityMainsearchBar.disableSearch();
+                if (binding.activityMainsearchBar.isSearchEnabled())
+                    binding.activityMainsearchBar.disableSearch();
             }
 
             @Override

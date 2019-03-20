@@ -19,26 +19,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:context=".fragments.RecentWordsFragment">
-                    <android.support.design.widget.AppBarLayout
-                        android:id="@+id/fragmentSearchAppBarLayout"
-                        android:background="@android:color/white"
+
+                    <com.mancj.materialsearchbar.MaterialSearchBar
+                        style="@style/MaterialSearchBarLight"
+                        app:mt_speechMode="true"
+                        app:mt_hint="@string/text_demo_word"
+                        app:mt_searchIconDrawable="@drawable/ic_search_black_24dp"
+                        app:mt_placeholder="@string/app_name"
+                        app:mt_navIconEnabled="true"
+                        app:mt_maxSuggestionsCount="10"
                         android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize">
-                        <com.mancj.materialsearchbar.MaterialSearchBar
-                            style="@style/MaterialSearchBarLight"
-                            app:mt_speechMode="true"
-                            app:mt_hint="@string/text_demo_word"
-                            app:mt_hintColor="@color/LightGray"
-                            app:mt_placeholder="@string/app_name"
-                            app:mt_navIconEnabled="true"
-                            app:mt_maxSuggestionsCount="10"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/activityMainsearchBar" />
-                    </android.support.design.widget.AppBarLayout>
+                        android:layout_height="?attr/actionBarSize"
+                        android:id="@+id/activityMainsearchBar" />
+
                     <fragment
                         android:id="@+id/activityMainRandomWords"
-                        android:layout_below="@id/fragmentSearchAppBarLayout"
+                        android:layout_below="@id/activityMainsearchBar"
                         android:name="com.solo.sandcrabdictionary.fragments.RandomWordsFragment"
                         android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
