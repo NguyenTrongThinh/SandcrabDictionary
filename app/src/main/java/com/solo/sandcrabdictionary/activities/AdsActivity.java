@@ -2,33 +2,93 @@ package com.solo.sandcrabdictionary.activities;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.InterstitialAd;
 import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.ActivityAdsBinding;
 
 public class AdsActivity extends AppCompatActivity {
 
     ActivityAdsBinding binding;
+    private InterstitialAd mInterstitialAd;
+    private Handler handler = new Handler();
+    private boolean user_stop = false;
     private static final String TAG = "AdsActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ads);
+        user_stop = false;
+        initInterstitialAds();
 
-        MobileAds.initialize(this, getResources().getString(R.string.admod_app_id));
         initTopAds();
-
         initBottomAds();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        user_stop = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        user_stop = true;
+        super.onBackPressed();
+    }
+
+    private void initInterstitialAds() {
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.admod_intersttial_test_id));
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        };
+        handler.post(runnable);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                mInterstitialAd.show();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                if (!user_stop)
+                    handler.postDelayed(runnable, 3000);
+            }
+        });
+
+
     }
 
     private void initBottomAds() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("B6E832929390E817BFEC1D0D23316E21")
                 .build();
         binding.adViewBottom.loadAd(adRequest);
@@ -67,7 +127,6 @@ public class AdsActivity extends AppCompatActivity {
 
     private void initTopAds() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("B6E832929390E817BFEC1D0D23316E21")
                 .build();
         binding.adViewTop.loadAd(adRequest);

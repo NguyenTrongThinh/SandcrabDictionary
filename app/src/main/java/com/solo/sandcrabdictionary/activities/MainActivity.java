@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.gms.ads.MobileAds;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.ActivityMainBinding;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
+        MobileAds.initialize(this, getResources().getString(R.string.admod_app_id));
         initActionBar();
         initFragments();
         initNavigationDrawer();
