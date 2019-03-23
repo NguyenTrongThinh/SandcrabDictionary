@@ -17,16 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.android.gms.ads.MobileAds;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.ActivityMainBinding;
 import com.solo.sandcrabdictionary.fragments.RandomWordsFragment;
 import com.solo.sandcrabdictionary.fragments.RecentWordsFragment;
 import com.solo.sandcrabdictionary.fragments.WordDetailsFragment;
-import com.solo.sandcrabdictionary.models.OxfordWord;
-import com.solo.sandcrabdictionary.servers.OxfordDictionaryClient;
-import com.solo.sandcrabdictionary.servers.OxfordDictionaryInterface;
+import com.solo.sandcrabdictionary.models.entries.OxfordWord;
+import com.solo.sandcrabdictionary.servers.OxfordDictionaryEntries;
+import com.solo.sandcrabdictionary.servers.OxfordDictionaryEntriesInterface;
 
 import java.util.ArrayList;
 
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        MobileAds.initialize(this, getResources().getString(R.string.admod_app_id));
+
         initActionBar();
         initFragments();
         initNavigationDrawer();
@@ -172,8 +171,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void lookUpWord(String word) {
-        final OxfordDictionaryInterface oxfordDictionaryInterface = OxfordDictionaryClient.getService();
-        final Call<OxfordWord> callback = oxfordDictionaryInterface.lookUpWord(word);
+        final OxfordDictionaryEntriesInterface oxfordDictionaryEntriesInterface = OxfordDictionaryEntries.getService();
+        final Call<OxfordWord> callback = oxfordDictionaryEntriesInterface.lookUpWord(word);
         callback.enqueue(new Callback<OxfordWord>() {
             @Override
             public void onResponse(Call<OxfordWord> call, Response<OxfordWord> response) {

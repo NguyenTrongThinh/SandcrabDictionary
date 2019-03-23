@@ -2,13 +2,13 @@ package com.solo.sandcrabdictionary.activities;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.ActivityAdsBinding;
 
@@ -16,14 +16,12 @@ public class AdsActivity extends AppCompatActivity {
 
     ActivityAdsBinding binding;
     private InterstitialAd mInterstitialAd;
-    private Handler handler = new Handler();
-    private boolean user_stop = false;
     private static final String TAG = "AdsActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ads);
-        user_stop = false;
+        MobileAds.initialize(this, getResources().getString(R.string.admod_app_id));
         initInterstitialAds();
 
         initTopAds();
@@ -34,12 +32,10 @@ public class AdsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        user_stop = true;
     }
 
     @Override
     public void onBackPressed() {
-        user_stop = true;
         super.onBackPressed();
     }
 
@@ -48,13 +44,9 @@ public class AdsActivity extends AppCompatActivity {
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.admod_intersttial_test_id));
 
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            }
-        };
-        handler.post(runnable);
+
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -79,8 +71,7 @@ public class AdsActivity extends AppCompatActivity {
 
             @Override
             public void onAdClosed() {
-                if (!user_stop)
-                    handler.postDelayed(runnable, 3000);
+
             }
         });
 

@@ -1,11 +1,11 @@
-package com.solo.sandcrabdictionary.models;
+package com.solo.sandcrabdictionary.models.lemmatron;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class OxfordWord {
+public class OxfordLemmatron {
 
 @SerializedName("metadata")
 @Expose

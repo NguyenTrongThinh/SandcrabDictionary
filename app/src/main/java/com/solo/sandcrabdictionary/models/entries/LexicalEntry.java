@@ -1,4 +1,4 @@
-package com.solo.sandcrabdictionary.models;
+package com.solo.sandcrabdictionary.models.entries;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.SingleWordLineBinding;
-import com.solo.sandcrabdictionary.models.ExampleModelWord;
+import com.solo.sandcrabdictionary.models.entries.ExampleModelWord;
 
 import java.util.ArrayList;
 import java.util.List;

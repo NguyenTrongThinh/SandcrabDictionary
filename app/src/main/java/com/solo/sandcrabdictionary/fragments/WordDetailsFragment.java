@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.solo.sandcrabdictionary.R;
 import com.solo.sandcrabdictionary.databinding.FragmentWordDetailsBinding;
-import com.solo.sandcrabdictionary.models.OxfordWord;
+import com.solo.sandcrabdictionary.models.entries.OxfordWord;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +34,7 @@ public class WordDetailsFragment extends Fragment {
     }
 
     public void setPageContent(OxfordWord oxfordWord) {
-        binding.fragmentWordDetailsText.setText(oxfordWord.getResults().get(0).getWord());
+        binding.fragmentWordDetailsWord.setText(oxfordWord.getResults().get(0).getWord());
     }
 
     public int getVisibility() {

@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".fragments.WordDetailsFragment">
-
-        <TextView
-            android:id="@+id/fragmentWordDetailsText"
-            android:scrollbars="vertical"
-            android:inputType="textMultiLine"
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:context=".fragments.WordDetailsFragment">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/fragmentWordDetailsWord"
+                android:textSize="50sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="@string/text_demo_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </ScrollView>
+
 </layout>

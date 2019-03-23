@@ -1,4 +1,4 @@
-package com.solo.sandcrabdictionary.models;
+package com.solo.sandcrabdictionary.models.entries;
 
 import android.os.Parcel;
 import android.os.Parcelable;
