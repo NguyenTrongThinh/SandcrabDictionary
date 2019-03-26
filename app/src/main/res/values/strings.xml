@@ -21,5 +21,7 @@
     <string name="admod_intersttial_test_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="admod_app_id">ca-app-pub-2499028768274374~7385377028</string>
     <string name="admod_interstitial_id">ca-app-pub-2499028768274374/9631587796</string>
+    <string name="text_demo_word_type">VERB</string>
+    <string name="text_region_en">EN</string>
 
 </resources>

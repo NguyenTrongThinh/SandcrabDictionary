@@ -21,6 +21,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/fragmentWordIPA"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="normal"
+                android:textColor="@color/LightGray"
+                android:text="@string/text_demo_ipa"
+                android:layout_below="@id/fragmentWordDetailsWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/fragmentWordType"
+                android:textSize="20sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:textStyle="normal"
+                android:textColor="@android:color/holo_blue_bright"
+                android:text="@string/text_demo_word_type"
+                android:layout_toRightOf="@id/fragmentWordDetailsWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:layout_alignBottom="@id/fragmentWordDetailsWord"
+                android:id="@+id/singleWordLineSound"
+                android:background="@null"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+
+                android:scaleType="fitXY"
+                android:src="@drawable/speaker_background" />
+
         </RelativeLayout>
     </ScrollView>
 

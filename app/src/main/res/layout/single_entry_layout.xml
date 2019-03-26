@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/fragmentWordDetailsWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="0dp"
+        android:text="@string/text_demo_word"
+        android:textColor="@android:color/black"
+        android:textSize="45sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_alignLeft="@id/fragmentWordDetailsWord"
+        android:id="@+id/fragmentWordIPA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_below="@id/fragmentWordDetailsWord"
+        android:text="@string/text_demo_ipa"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:layout_alignBottom="@id/singleWordLineSound"
+        android:id="@+id/fragmentWordRegion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_below="@id/fragmentWordDetailsWord"
+        android:layout_toRightOf="@id/singleWordLineSound"
+        android:text="@string/text_region_en"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:paddingStart="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:id="@+id/fragmentWordType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/word_type_background"
+        android:layout_below="@id/fragmentWordIPA"
+        android:text="@string/text_demo_word_type"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <ImageButton
+        android:id="@+id/singleWordLineSound"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/fragmentWordIPA"
+        android:layout_below="@id/fragmentWordDetailsWord"
+        android:layout_marginStart="40dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/speaker_background" />
+
+    <ImageButton
+        android:id="@+id/singleEntryLike"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_alignTop="@id/fragmentWordDetailsWord"
+        android:layout_alignBottom="@id/fragmentWordDetailsWord"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_favorite_border_blue_24dp" />
+
+</RelativeLayout>
